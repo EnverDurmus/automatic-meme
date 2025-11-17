@@ -10,5 +10,5 @@ intents.message_content = True
 
 
 client = Client(intents=intents)
-client.run('MTQ0MDA3MDIzNTIyMTkxNzc1Nw.G4nK0N.RV7wCxs4acZrVjhqoJjwsjiek0xNMyqRuqxXWk')
+client.run('') # I will remove the token everytime I save my code so that if anyone ever does come across my code, they do not have access to my discord bot token.
 

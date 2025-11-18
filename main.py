@@ -23,15 +23,110 @@ class Client(commands.Bot):
             await message.channel.send(f'Hi there {message.author}')
 
     async def on_reaction_add(self, reaction, user):
-        await reaction.message.channel.send('You reacted')
+        if user.bot:
+            return
+        
+        guild = reaction.message.guild
+
+        if not guild:
+            return
+        
+        if hasattr(self, "color_role_message_id") and reaction.message.id != self.color_role_message_id:
+            return
+        
+        emoji = str(reaction.emoji)
+
+        reaction_role_map = {
+            '❤️': 'Red',
+            '💙': 'Blue',
+            '💚': 'Green',
+            '💛': 'Yellow',
+            '🧡': 'Orange'
+        }
+
+        if emoji in reaction_role_map:
+
+            role_name = reaction_role_map[emoji]
+            role = discord.utils.get(guild.roles, name=role_name)
+
+            if role and user:
+                await user.add_roles(role)
+                print(f"Assigned {role_name} to {user}")
+
+    async def on_reaction_remove(self, reaction, user):
+        if user.bot:
+            return
+        
+        guild = reaction.message.guild
+
+        if not guild:
+            return
+        
+        if hasattr(self, "color_role_message_id") and reaction.message.id != self.color_role_message_id:
+            return
+        
+        emoji = str(reaction.emoji)
+
+        reaction_role_map = {
+            '❤️': 'Red',
+            '💙': 'Blue',
+            '💚': 'Green',
+            '💛': 'Yellow',
+            '🧡': 'Orange'
+        }
+
+        if emoji in reaction_role_map:
+
+            role_name = reaction_role_map[emoji]
+            role = discord.utils.get(guild.roles, name=role_name)
+
+            if role and user:
+                await user.remove_roles(role)
+                print(f"Removed {role_name} from {user}")            
+
+    #async def on_reaction_add(self, reaction, user): # Took these under as comments because when I run color roles / cmd, it prints the "You reacted" 5 times
+        #await reaction.message.channel.send('You reacted')
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.reactions = True
+intents.guilds = True
+intents.members = True
 client = Client(command_prefix="!", intents = intents)
 
 
 
 GUILD_ID = discord.Object(id=1440069533384577036)
+
+@client.tree.command(name="colorroles", description="Create a message that lets users to pick a color role", guild=GUILD_ID)
+async def color_roles(interaction: discord.Interaction):
+    # Check if the user that wants to run this command is an admin
+    if not interaction.user.guild_permissions.administrator:
+        await interaction.respond.send_message("You must be an admin to run this command", ephemeral=True)
+        return
+    
+    await interaction.response.defer(ephemeral=True)
+    
+    description = (
+        "React to this message to get your color role!\n\n"
+        "❤️ Red\n"
+        "💙 Blue\n"
+        "💚 Green\n"
+        "💛 Yellow\n"
+        "🧡 Orange\n"
+    )
+
+    embed = discord.Embed(title="Pick your color", description=description, color=discord.Color.blurple())
+    message = await interaction.channel.send(embed=embed)
+
+    emojis = ['❤️', '💙', '💚', '💛', '🧡']
+
+    for emoji in emojis:
+        await message.add_reaction(emoji)
+
+    client.color_role_message_id = message.id
+
+    await interaction.followup.send("Color role message created!", ephemeral=True)
 
 @client.tree.command(name="hello", description="Say hello!", guild=GUILD_ID)
 async def sayHello(interaction: discord.Interaction):
@@ -120,5 +215,5 @@ async def myMenu(interaction: discord.Interaction):
 
 
 
-client.run('MTQ0MDA3MDIzNTIyMTkxNzc1Nw.GU2ZtX.ctxPf4j3Mk0OsUhB8FOZ_DlLmKA3BHByvrH82A') # I will change the token everytime I save my code so that if anyone ever does come across my code, they do not have access to my discord bot token.
+client.run('MTQ0MDA3MDIzNTIyMTkxNzc1Nw.GQZ8-z.lyAH8lgzWWW76Wpaff39gZ0q6bx_yCLYkirWMw') # I will change the token everytime I save my code so that if anyone ever does come across my code, they do not have access to my discord bot token.
 

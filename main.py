@@ -215,7 +215,7 @@ async def myMenu(interaction: discord.Interaction):
 
 
 
-client.run('MTQ0MDA3MDIzNTIyMTkxNzc1Nw.GOsgs5._JVUvqoJG9m0ZefW_lUZ0LnJAa8MMw4orpuTVk') # I will change the token everytime I save my code so that if anyone ever does come across my code, they do not have access to my discord bot token.
+client.run('MTQ0MDA3MDIzNTIyMTkxNzc1Nw.GRibJo.9nVnem2zc--0qitcrT-WMoD5ReCC7Srgv88_XM') # I will change the token everytime I save my code so that if anyone ever does come across my code, they do not have access to my discord bot token.
 # Change token everytime you open this file, means get a new token and paste it in here because
 # When you update the repo, it gives me a warning in which tells me that my token is secret info
 # And it should not be released to the public, either way, discord resets my token for me so

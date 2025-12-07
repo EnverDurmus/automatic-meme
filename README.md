@@ -1,6 +1,10 @@
 # FALL 2025 Discord Bot by Enver Durmus
 Discord Bot for CIS 1051
 
+# YOUTUBE VIDEO DEMONSTRATION
+https://www.youtube.com/watch?v=SPZ2fjmknN4
+
+
 # Difficulties I've encountered
 Some difficulties that I have encountered is to actually get discord.py downloaded and running, before going into this idea I didn't know you would have to download discord.py in order to write and test the code, I had to google it separately because the video I followed to build my discord bot ended up skipping that part for some reason.
 
